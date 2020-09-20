@@ -1,0 +1,3 @@
+[submodule "genlang"]
+	path = genlang
+	url = https://github.com/a11ce/genlang.git

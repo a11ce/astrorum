@@ -1,6 +1,11 @@
+from genlang import language
 
-def shipName():
-    return "Antelope"
+def shipName(lang = None):
+    if not lang:
+        lang = language.Language()
+        return lang.newMorpheme().capitalize(), lang
+        
+    return lang.newMorpheme().capitalize()
 
-def personName():
-    return "Alice"
+def personName(lang = None):
+    return shipName(lang)
