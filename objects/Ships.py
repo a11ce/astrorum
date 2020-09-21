@@ -1,4 +1,5 @@
-import randomGen as gen
+from game import randomGen as gen
+from game import PlayerIO as IO
 
 from objects import People
 from objects import Rooms
@@ -8,7 +9,7 @@ from objects import Cargo
 class Ship:
     def __init__(self,
                  name=None,
-                 cargo=None,
+                 cargo=[],
                  crew=None,
                  cargoCap=100,
                  crewCap=6,
@@ -18,6 +19,7 @@ class Ship:
         self.cargoCap = cargoCap
         self.crew = crew
         self.crewCap = crewCap
+        self.roomCap = roomCap
         self.rooms = [Rooms.ShipRoom() for _ in range(roomCap)]
 
     def __str__(self):
@@ -53,3 +55,15 @@ class AIShip(Ship):
             People.Crew(name=gen.personName(self.lang)) for _ in range(crewCap)
         ]
         self.crewCap = crewCap
+
+
+class PlayerShip(Ship):
+    def __init__(self, **kwargs):
+        super(PlayerShip, self).__init__(**kwargs)
+        #self.crewCap = 6
+        self.name = IO.askText("Name your new ship:")
+        IO.titlePrint()
+        self.crew = IO.selectFrom([
+            People.Crew(name=gen.personName()[0]) for _ in range(self.crewCap)
+        ], (self.crewCap //2))
+        self.rooms = [Rooms.ShipRoom(roomType=x) for x in IO.selectFrom(Rooms.ROOM_TYPES, self.roomCap, displayFunc = lambda x : x.title())]
