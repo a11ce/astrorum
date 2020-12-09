@@ -22,6 +22,9 @@ class Ship:
         self.roomCap = roomCap
         self.rooms = [Rooms.ShipRoom() for _ in range(roomCap)]
 
+
+# ddd
+
     def __str__(self):
         s = ""
         s += "Name is {}\n".format(self.name)
@@ -65,5 +68,10 @@ class PlayerShip(Ship):
         IO.titlePrint()
         self.crew = IO.selectFrom([
             People.Crew(name=gen.personName()[0]) for _ in range(self.crewCap)
-        ], (self.crewCap //2))
-        self.rooms = [Rooms.ShipRoom(roomType=x) for x in IO.selectFrom(Rooms.ROOM_TYPES, self.roomCap, displayFunc = lambda x : x.title())]
+        ], (self.crewCap // 2))
+        self.rooms = [
+            Rooms.ShipRoom(roomType=x)
+            for x in IO.selectFrom(Rooms.ROOM_TYPES,
+                                   self.roomCap,
+                                   displayFunc=lambda x: x.title())
+        ]
